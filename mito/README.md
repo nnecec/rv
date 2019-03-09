@@ -1,4 +1,4 @@
-# diary
+# mito
 
 A new Flutter project.
 

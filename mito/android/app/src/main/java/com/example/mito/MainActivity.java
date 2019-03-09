@@ -1,4 +1,4 @@
-package com.example.diary;
+package com.example.mito;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
