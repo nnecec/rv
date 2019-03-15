@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Counter extends StatefulWidget {
-  Counter({Key key, this.title}) : super(key: key);
-  final String title;
-
   @override
   _CounterState createState() => new _CounterState();
 }
@@ -17,30 +15,39 @@ class _CounterState extends State<Counter> {
     });
   }
 
+  void _decrementCounter() {
+    setState(() {
+      _counter--;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(widget.title ?? ''),
+        title: new Text("Counter"),
       ),
-      body: new Center(
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Text(
-              'You have pushed the button this many times:',
+      body: new Column(
+        children: <Widget>[
+          new Text(
+            '$_counter',
+            style: TextStyle(
+              fontSize: 64,
             ),
-            new Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: new Icon(Icons.add),
+          ),
+          new ButtonBar(
+            children: <Widget>[
+              RaisedButton(
+                onPressed: _incrementCounter,
+                child: Text('增加'),
+              ),
+              RaisedButton(
+                onPressed: _decrementCounter,
+                child: Text('减少'),
+              ),
+            ],
+          )
+        ],
       ),
     );
   }

@@ -10,18 +10,7 @@ class Overview extends StatelessWidget {
       body: Column(
         children: <Widget>[
           menuButton(context, "计数器", "/tools/counter"),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text("2"),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text("3"),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text("4"),
-          ),
+          menuButton(context, "记账本", "/tools/wallet"),
         ],
       ),
     );
@@ -33,9 +22,9 @@ Widget menuButton(BuildContext context, String title, String key) {
     padding: new EdgeInsets.all(8.0),
     child: new ConstrainedBox(
       constraints: new BoxConstraints(minHeight: 42.0),
-      child: new FlatButton(
-        child: Text(title),
-        onPressed: () {
+      child: new ListTile(
+        title: Text(title),
+        onTap: () {
           Application.router.navigateTo(context, key);
         },
       ),
