@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../../utils/store.dart';
 
 class Counter extends StatefulWidget {
   @override
@@ -12,12 +12,24 @@ class _CounterState extends State<Counter> {
   void _incrementCounter() {
     setState(() {
       _counter++;
+      setStore('counter', _counter);
     });
   }
 
   void _decrementCounter() {
     setState(() {
       _counter--;
+      setStore('counter', _counter);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getStore('counter').then((int value) {
+      setState(() {
+        _counter = value;
+      });
     });
   }
 
