@@ -1,0 +1,11 @@
+#system
+*.log
+.DS_Store
+package-lock.json
+yarn.lock
+
+#node
+node_modules
+
+# build
+dist
