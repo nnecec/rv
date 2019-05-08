@@ -1,6 +1,6 @@
 {
   "name": "chatroom",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -12,7 +12,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@dian/test": "^0.0.1",
     "mime": "^2.4.0",
+    "react": "^16.8.6",
     "socket.io": "^2.2.0"
   }
 }
