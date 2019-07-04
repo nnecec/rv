@@ -12,6 +12,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@babel/core": "^7.4.4",
     "@dian/test": "^0.0.1",
     "mime": "^2.4.0",
     "react": "^16.8.6",
