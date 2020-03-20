@@ -4,19 +4,24 @@
   "private": true,
   "dependencies": {
     "@atlaskit/theme": "^9.5.1",
-    "@emotion/core": "^10.0.28",
-    "@emotion/styled": "^10.0.27",
     "@formily/antd": "^1.0.8",
     "@formily/antd-components": "^1.0.8",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "antd": "^4.0.3",
+    "form-render": "^0.5.1",
+    "lodash": "^4.17.15",
     "memoize-one": "^5.1.1",
+    "mobx": "^5.15.4",
+    "mobx-devtools-mst": "^0.9.21",
+    "mobx-react-lite": "^1.5.2",
+    "mobx-state-tree": "^3.15.0",
     "react": "^16.13.0",
     "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^16.13.0",
-    "react-scripts": "3.4.0"
+    "react-scripts": "3.4.0",
+    "styled-components": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

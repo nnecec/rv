@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Palette from './palette'
-import Components from './components'
+
+import StoreProvider from './store';
 
 import 'antd/dist/antd.css'
 
-const App = (params) => {
+const App = () => {
   return (
-    <div>
+    <StoreProvider>
       <Palette></Palette>
-    </div>
+    </StoreProvider>
   )
 }
 

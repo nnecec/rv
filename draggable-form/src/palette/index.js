@@ -1,10 +1,13 @@
 // @flow
 import React, { useState } from 'react';
-import styled from '@emotion/styled';
+import styled from 'styled-components';
 import { colors } from '@atlaskit/theme';
 import { DragDropContext } from "react-beautiful-dnd";
 
-import { moveComponentToBoard } from '../utils/reorder';
+import { Input } from 'antd'
+
+import { reorder, moveItemToTarget } from '../utils/reorder';
+import { componentsPanelConfigs } from '../utils/data'
 
 import PaletteComponents from './components'
 import PaletteBoard from './board'
@@ -25,18 +28,21 @@ const Root = styled.div`
 `;
 
 const Palette = props => {
-  const [listMap, setListMap] = useState()
+  const [boardData, setBoardData] = useState([])
 
   function onDragEnd (result) {
     // dropped nowhere
     if (!result.destination) {
       return;
     }
-    console.log(result)
-    const { destination, source } = result
 
-    if (destination.droppableId === 'board' && source.droppableId === 'component') {
+    const { destination, source, draggableId } = result
 
+    if (destination.droppableId === source.droppableId) {
+      setBoardData(reorder(boardData, source.index, destination.index))
+    }
+    if (destination.droppableId === 'board' && source.droppableId === 'components') {
+      setBoardData(moveItemToTarget({ target: boardData, destination, item: componentsPanelConfigs.find(config => config.componentName === draggableId.split('-')[1]) }))
     }
   };
 
@@ -45,7 +51,7 @@ const Palette = props => {
       <Root>
         <PaletteTree />
 
-        <PaletteBoard />
+        <PaletteBoard data={boardData} />
 
         <PaletteComponents />
       </Root>

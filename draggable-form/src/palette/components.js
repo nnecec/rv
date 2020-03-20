@@ -1,14 +1,17 @@
 // @flow
 import React from 'react';
-import styled from '@emotion/styled';
+import styled from 'styled-components';
 
-import { Input } from 'antd'
 
 import DroppablePanel from '../components/droppable-panel'
 import DraggableCard from '../components/draggable-card'
 import DropZone from '../components/drop-zone'
+import ComponentRender from '../components/component-render'
+
 
 import { DRAG_TYPE } from '../utils/constant'
+
+import { componentsPanelConfigs } from '../utils/data'
 
 const grid = 8
 
@@ -28,12 +31,15 @@ const PaletteComponents = props => {
         internalScroll
       >
         <DropZone>
-          <DraggableCard
-            draggableId="antd-input"
-            index={0}
-          >
-            <Input></Input>
-          </DraggableCard>
+          {componentsPanelConfigs.map((config, index) => {
+            return <DraggableCard
+              draggableId={`component-${config.componentName}`}
+              index={index}
+              key={config.componentName}
+            >
+              <ComponentRender config={config}></ComponentRender>
+            </DraggableCard>
+          })}
         </DropZone>
       </DroppablePanel>
     </ConsolePanel>
