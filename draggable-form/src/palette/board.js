@@ -1,31 +1,22 @@
 // @flow
-import React from 'react';
-import styled from 'styled-components';
-
-import { Input } from 'antd'
+import React from 'react'
+import styled from 'styled-components'
+import { Card } from 'antd'
 
 import DroppablePanel from '../components/droppable-panel'
 import DraggableCard from '../components/draggable-card'
 import DropZone from '../components/drop-zone'
-import ComponentRender from '../components/component-render'
-
+import FormilyRender from '../components/formily-render'
 
 import { DRAG_TYPE } from '../utils/constant'
-import { componentsPanelConfigs } from '../utils/data'
-
-
-const grid = 8
-
-const ConsolePanel = styled.div`
-  margin: 0 ${grid * 2}px;
-  height: 100%;
-  width: calc(100vw - 600px);
-`;
 
 const PaletteComponents = props => {
   const { data } = props
   return (
-    <ConsolePanel>
+    <Card
+      title="Board"
+      bodyStyle={{ padding: 0, height: '100%' }}
+      style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
       <DroppablePanel
         droppableId="board"
         type={DRAG_TYPE}
@@ -33,20 +24,19 @@ const PaletteComponents = props => {
       >
         <DropZone>
           {data.map((config, index) => {
-            console.log(data)
             return <DraggableCard
-              draggableId={`board-${config.componentName}-${index}`}
+              draggableId={`board-${config}-${index}`}
               index={index}
-              key={`${config.componentName}-${index}`}
+              key={`${config}-${index}`}
             >
-              <ComponentRender config={config}></ComponentRender>
+              <FormilyRender config={config}></FormilyRender>
+
             </DraggableCard>
           })}
         </DropZone>
-      </DroppablePanel>
-    </ConsolePanel>
-  );
-
+      </DroppablePanel >
+    </Card >
+  )
 }
 
 export default PaletteComponents

@@ -1,37 +1,27 @@
 import React, { cloneElement } from 'react'
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import styled from 'styled-components';
-import { colors } from '@atlaskit/theme';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import styled from 'styled-components'
+import { colors } from '@atlaskit/theme'
 
 const grid = 8
-const borderRadius = 2
-const getBackgroundColor = (
-  isDragging,
-  isGroupedOver,
-  authorColors,
-) => {
-  if (isDragging) {
-    return 'green';
-  }
 
-  if (isGroupedOver) {
-    return colors.N30;
-  }
-
-  return colors.N0;
-};
-
-const getBorderColor = (isDragging, authorColors) =>
-  isDragging ? 'red' : 'transparent';
-const imageSize = 40;
-
+const imageSize = 40
 
 const Container = styled.div`
   border-radius: 4px;
   border: 2px solid transparent;
-  border-color: ${props => getBorderColor(props.isDragging, props.colors)};
-  background-color: ${props =>
-    getBackgroundColor(props.isDragging, props.isGroupedOver, props.colors)};
+  border-color: ${props => props.isDragging ? colors.B100 : 'transparent'};
+  background-color: ${props => {
+    if (props.isDragging) {
+      return colors.Y100
+    }
+
+    if (props.isGroupedOver) {
+      return colors.N30
+    }
+
+    return colors.N0
+  }};
   box-shadow: ${({ isDragging }) =>
     isDragging ? `2px 2px 1px ${colors.N70}` : 'none'};
   box-sizing: border-box;
@@ -57,7 +47,7 @@ const Container = styled.div`
 
   /* flexbox */
   display: flex;
-`;
+`
 
 const DraggableCard = (props) => {
   const {
@@ -67,20 +57,20 @@ const DraggableCard = (props) => {
     // style
     style,
     ...restProps
-  } = props;
+  } = props
 
   return (<Draggable droppableId={droppableId} index={index} {...restProps}>
     {(
       dragProvided,
-      dragSnapshot,
+      dragSnapshot
     ) => {
       const childNode =
         typeof children === 'function'
           ? children(dragProvided, dragSnapshot)
           : cloneElement(children, {
             dragProvided,
-            dragSnapshot,
-          });
+            dragSnapshot
+          })
       return <Container
         isDragging={dragSnapshot.isDragging}
         isGroupedOver={Boolean(dragSnapshot.combineTargetFor)}
@@ -92,6 +82,5 @@ const DraggableCard = (props) => {
     }}
   </Draggable >)
 }
-
 
 export default DraggableCard

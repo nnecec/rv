@@ -1,20 +1,20 @@
 import React, { cloneElement } from 'react'
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import styled from 'styled-components';
-import { colors } from '@atlaskit/theme';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import styled from 'styled-components'
+import { colors } from '@atlaskit/theme'
 
 export const getBackgroundColor = (
   isDraggingOver,
-  isDraggingFrom,
+  isDraggingFrom
 ) => {
   if (isDraggingOver) {
-    return colors.R50;
+    return colors.R50
   }
   if (isDraggingFrom) {
-    return colors.T50;
+    return colors.T50
   }
-  return colors.N30;
-};
+  return colors.N20
+}
 
 const Wrapper = styled.div`
   background-color: ${props =>
@@ -28,13 +28,13 @@ const Wrapper = styled.div`
   transition: background-color 0.2s ease, opacity 0.1s ease;
   user-select: none;
   height: 100%;
-`;
+`
 
 const ScrollContainer = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
   height: 100%;
-`;
+`
 
 const DroppablePanel = (props) => {
   const {
@@ -46,10 +46,7 @@ const DroppablePanel = (props) => {
     scrollContainerStyle,
     style,
     ...restProps
-  } = props;
-
-
-
+  } = props
 
   return (
     <Droppable
@@ -59,14 +56,14 @@ const DroppablePanel = (props) => {
     >
       {(
         dropProvided,
-        dropSnapshot,
+        dropSnapshot
       ) => {
         const childNode =
           typeof children === 'function'
             ? children(dropProvided, dropSnapshot)
             : cloneElement(children, {
-              dropProvided, dropSnapshot,
-            });
+              dropProvided, dropSnapshot
+            })
 
         return (
           <Wrapper
