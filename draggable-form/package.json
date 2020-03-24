@@ -6,6 +6,7 @@
     "@atlaskit/theme": "^9.5.1",
     "@formily/antd": "^1.0.8",
     "@formily/antd-components": "^1.0.8",
+    "@shopify/draggable": "^1.0.0-beta.8",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -21,7 +22,9 @@
     "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^16.13.0",
     "react-scripts": "3.4.0",
+    "react-sortablejs": "^2.0.11",
     "shortid": "^2.2.15",
+    "sortablejs": "^1.10.2",
     "styled-components": "^5.0.1"
   },
   "scripts": {

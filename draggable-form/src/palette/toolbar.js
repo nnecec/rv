@@ -7,6 +7,7 @@ import {
 } from '@formily/antd'
 
 import FormilyRender from '../components/formily-render'
+import { useObserver } from 'mobx-react-lite'
 
 const Container = styled.div`
 `
@@ -15,12 +16,12 @@ const ToolBar = (props) => {
   const { paletteData } = props
   const [schema, setSchema] = useState({})
   const [drawerVisible, setDrawerVisible] = useState(false)
+  console.log(paletteData)
 
   function handlePreview () {
-    console.log(paletteData)
     const properties = {}
     paletteData.board.forEach(config => {
-      properties[config.usage.name] = config.usage.property
+      properties[config.key] = config.property
     })
 
     setSchema({
@@ -30,7 +31,7 @@ const ToolBar = (props) => {
     setDrawerVisible(true)
   }
 
-  return (
+  return useObserver(() => (
     <Container>
       <PageHeader
         ghost={false}
@@ -48,12 +49,12 @@ const ToolBar = (props) => {
         width={800}
       >
         <FormilyRender config={schema} onSubmit={values => console.log(values)}>
-          <Submit>查询</Submit>
+          <Submit>确认</Submit>
           <Reset>重置</Reset>
         </FormilyRender>
       </Drawer>
     </Container>
-  )
+  ))
 }
 
 export default ToolBar

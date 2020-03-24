@@ -10,7 +10,11 @@ const imageSize = 40
 const Container = styled.div`
   border-radius: 4px;
   border: 2px solid transparent;
-  border-color: ${props => props.isDragging ? colors.B100 : 'transparent'};
+  border-color: ${props => {
+    if (props.isDragging) { return colors.B100 }
+    if (props.isSelected) { return colors.R100 }
+    return 'transparent'
+  }};
   background-color: ${props => {
     if (props.isDragging) {
       return colors.Y100
@@ -55,11 +59,15 @@ const DraggableCard = (props) => {
     index,
     children,
     // style
-    style,
+    disableInteractiveElementBlocking = {
+      canDragInteractiveElements: true
+    },
+    onClick,
+    isSelected = false,
     ...restProps
   } = props
 
-  return (<Draggable droppableId={droppableId} index={index} {...restProps}>
+  return (<Draggable droppableId={droppableId} index={index} disableInteractiveElementBlocking={disableInteractiveElementBlocking} {...restProps}>
     {(
       dragProvided,
       dragSnapshot
@@ -72,11 +80,15 @@ const DraggableCard = (props) => {
             dragSnapshot
           })
       return <Container
+        isSelected={isSelected}
         isDragging={dragSnapshot.isDragging}
         isGroupedOver={Boolean(dragSnapshot.combineTargetFor)}
         ref={dragProvided.innerRef}
+        onClick={onClick}
         {...dragProvided.draggableProps}
-        {...dragProvided.dragHandleProps}>
+        {...dragProvided.dragHandleProps}
+      >
+
         {childNode}
       </Container>
     }}

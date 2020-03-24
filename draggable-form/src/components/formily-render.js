@@ -16,6 +16,7 @@ import {
   Transfer,
   Rating
 } from '@formily/antd-components'
+import { useObserver } from 'mobx-react-lite'
 
 const components = {
   Input,
@@ -40,7 +41,7 @@ const components = {
 const FormilyRender = (props) => {
   const { config, children, ...restProps } = props
 
-  return (
+  return useObserver(() => (
     <div>
       <SchemaForm
         components={components}
@@ -50,7 +51,7 @@ const FormilyRender = (props) => {
         {children}
       </SchemaForm>
     </div>
-  )
+  ))
 }
 
 export default FormilyRender
