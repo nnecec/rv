@@ -1,13 +1,13 @@
-import React from 'react';
-import Palette from './palette'
+import React from 'react'
+import SortBoard from './sortable'
 
 import 'antd/dist/antd.css'
 
 const App = () => {
   return (
-    <Palette></Palette>
+    // <Palette></Palette>
+    <SortBoard />
   )
 }
 
-
-export default App;
+export default App

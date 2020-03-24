@@ -1,16 +1,13 @@
-// @flow
 import React from 'react'
-import styled from 'styled-components'
 import { Card, Tabs } from 'antd'
 import { useObserver } from 'mobx-react-lite'
 
-import DroppablePanel from '../components/droppable-panel'
-import DraggableCard from '../components/draggable-card'
-import DropZone from '../components/drop-zone'
 import FormilyRender from '../components/formily-render'
 import PropertyEditor from '../components/property-editor'
+import { DragBox } from '../components/box'
+import { ReactSortable } from '../components/sortable'
 
-import { DRAG_TYPE } from '../utils/constant'
+import shortid from 'shortid'
 
 const { TabPane } = Tabs
 
@@ -24,31 +21,37 @@ const PaletteComponents = props => {
       style={{ backgroundColor: '#fff' }}
       onChange={(key) => {
         paletteData.tabKey = key
-        console.log(paletteData)
       }}>
       <TabPane tab="Components" key="components">
-        <DroppablePanel
-          droppableId="components"
-          type={DRAG_TYPE}
-          internalScroll
+        <ReactSortable
+          list={paletteData.components}
+          setList={(data) => {
+            paletteData.components = data
+          }}
+          group={{
+            name: 'sortable-group',
+            pull: 'clone',
+            put: false
+          }}
+          animation={150}
+          clone={item => {
+            return { ...item, id: shortid.generate() }
+          }}
+          sort={false}
         >
-          <DropZone>
-            {paletteData.components.map((config, index) => {
-              return <DraggableCard
-                draggableId={`component@@${config.id}`}
-                index={index}
-                key={config.id}
-              >
+          {paletteData.components.map((config, index) => {
+            return (
+              <DragBox key={config.id}>
                 <FormilyRender config={{
                   type: 'object',
                   properties: {
                     [config.key]: config.property
                   }
                 }}></FormilyRender>
-              </DraggableCard>
-            })}
-          </DropZone>
-        </DroppablePanel>
+              </DragBox>
+            )
+          })}
+        </ReactSortable>
       </TabPane>
       <TabPane tab="Property" key="property">
         <PropertyEditor paletteData={paletteData}></PropertyEditor>

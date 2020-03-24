@@ -57,52 +57,27 @@ const Palette = props => {
     paletteData.components = components
   }, [paletteData])
 
-  function onDragEnd (result) {
-    // dropped nowhere
-    if (!result.destination) {
-      return
-    }
-
-    const { destination, source, draggableId } = result
-
-    if (destination.droppableId === 'board' && destination.droppableId === source.droppableId) {
-      paletteData.setBoard(reorder(paletteData.board, source.index, destination.index))
-    }
-    if (destination.droppableId === 'board' && source.droppableId === 'components') {
-      paletteData.setBoard(moveItemToTarget({
-        target: paletteData.board,
-        destination,
-        item: paletteData.components.find(c => {
-          return c.id === draggableId.split('@@')[1]
-        })
-      }))
-    }
-  };
-
   return (
     <Container>
       <ToolBar paletteData={paletteData}></ToolBar>
 
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Root>
-          <Column>
-            <Observer>
-              {() => <PaletteTree />}
-            </Observer>
-          </Column>
-          <Column style={{ flexGrow: 1 }}>
-            <Observer>
-              {() => <PaletteBoard paletteData={paletteData} />}
-            </Observer>
-          </Column>
-          <Column>
-            <Observer>
-              {() => <PaletteComponents paletteData={paletteData} />}
-            </Observer>
-          </Column>
-        </Root>
-
-      </DragDropContext>
+      <Root>
+        <Column>
+          <Observer>
+            {() => <PaletteTree />}
+          </Observer>
+        </Column>
+        <Column style={{ flexGrow: 1 }}>
+          <Observer>
+            {() => <PaletteBoard paletteData={paletteData} />}
+          </Observer>
+        </Column>
+        <Column>
+          <Observer>
+            {() => <PaletteComponents paletteData={paletteData} />}
+          </Observer>
+        </Column>
+      </Root>
     </Container >
   )
 }

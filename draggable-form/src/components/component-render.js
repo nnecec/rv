@@ -1,8 +1,6 @@
 import React, { createElement } from 'react'
-import DraggableCard from './draggable-card'
-import * as AntDesignComponents from 'antd';
+import * as AntDesignComponents from 'antd'
 import { get } from 'lodash'
-
 
 const ComponentRender = (props) => {
   const { config } = props
@@ -12,7 +10,6 @@ const ComponentRender = (props) => {
   const type = get(AntDesignComponents, componentName) || componentName
 
   return createElement(type, propertiesConfig)
-
 }
 
 export default ComponentRender
