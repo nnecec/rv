@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^4.0.3",
     "@atlaskit/theme": "^9.5.1",
     "@formily/antd": "^1.0.8",
     "@formily/antd-components": "^1.0.8",

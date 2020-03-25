@@ -1,13 +1,11 @@
 // @flow
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { colors } from '@atlaskit/theme'
-import { DragDropContext } from 'react-beautiful-dnd'
 import { useLocalStore, Observer } from 'mobx-react-lite'
 import shortid from 'shortid'
 
-import { reorder, moveItemToTarget } from '../utils/reorder'
 import { componentsPanelConfigs } from '../utils/data'
+import { colors } from '../theme/config'
 
 import PaletteComponents from './editor'
 import PaletteBoard from './board'
@@ -21,7 +19,7 @@ const Container = styled.div`
 `
 
 const Root = styled.div`
-  background-color: ${colors.B200};
+  background-color: ${colors.primary};
   flex-grow: 1;
   display: flex;
   padding: 8px 4px;

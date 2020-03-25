@@ -1,9 +1,15 @@
 export const componentsPanelConfigs = {
   string: {
     type: 'string',
-    title: 'String',
+    title: '文本',
     name: 'string',
     'x-component': 'input'
+  },
+  number: {
+    type: 'number',
+    title: '数字',
+    name: 'number',
+    'x-component': 'numberpicker'
   },
   radio: {
     type: 'string',
@@ -17,22 +23,9 @@ export const componentsPanelConfigs = {
       label: 3,
       value: 3
     }],
-    title: 'Radio',
+    title: '单选',
     name: 'radio',
     'x-component': 'radio'
-  },
-  select: {
-    type: 'string',
-    enum: [{
-      label: 'Leo',
-      value: 'leo'
-    }, {
-      label: 'Lulu',
-      value: 'lulu'
-    }],
-    title: 'Select',
-    name: 'select',
-    'x-component': 'select'
   },
   checkbox: {
     type: 'string',
@@ -46,21 +39,28 @@ export const componentsPanelConfigs = {
       label: 3,
       value: 3
     }],
-    title: 'Checkbox',
+    title: '多选',
     name: 'checkbox',
     'x-component': 'checkbox'
   },
+  select: {
+    type: 'string',
+    enum: [{
+      label: 'Leo',
+      value: 'leo'
+    }, {
+      label: 'Lulu',
+      value: 'lulu'
+    }],
+    title: '下拉选择',
+    name: 'select',
+    'x-component': 'select'
+  },
   textarea: {
     type: 'string',
-    title: 'TextArea',
+    title: '长文本',
     name: 'textarea',
     'x-component': 'textarea'
-  },
-  number: {
-    type: 'number',
-    title: '数字选择',
-    name: 'number',
-    'x-component': 'numberpicker'
   },
   boolean: {
     type: 'boolean',
@@ -70,7 +70,7 @@ export const componentsPanelConfigs = {
   },
   date: {
     type: 'string',
-    title: '日期选择',
+    title: '日期',
     name: 'date',
     'x-component': 'datepicker'
   },
@@ -78,8 +78,8 @@ export const componentsPanelConfigs = {
     type: 'array<date>',
     title: '日期范围',
     default: [
-      '2018-12-19',
-      '2018-12-19'
+      '2020-01-01',
+      '2020-02-01'
     ],
     name: 'daterange',
     'x-component': 'daterangepicker'

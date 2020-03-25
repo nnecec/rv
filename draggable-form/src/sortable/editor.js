@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card, Tabs } from 'antd'
 import { useObserver } from 'mobx-react-lite'
+import { cloneDeep } from 'lodash'
 
 import FormilyRender from '../components/formily-render'
 import PropertyEditor from '../components/property-editor'
@@ -12,7 +13,7 @@ import shortid from 'shortid'
 const { TabPane } = Tabs
 
 const PaletteComponents = props => {
-  const { paletteData } = props
+  const { paletteData, forceUpdate } = props
 
   return useObserver(() => (
     <Tabs
@@ -35,7 +36,7 @@ const PaletteComponents = props => {
           }}
           animation={150}
           clone={item => {
-            return { ...item, id: shortid.generate() }
+            return cloneDeep({ ...item, id: shortid.generate() })
           }}
           sort={false}
         >
@@ -54,7 +55,7 @@ const PaletteComponents = props => {
         </ReactSortable>
       </TabPane>
       <TabPane tab="Property" key="property">
-        <PropertyEditor paletteData={paletteData}></PropertyEditor>
+        <PropertyEditor paletteData={paletteData} forceUpdate={forceUpdate}></PropertyEditor>
       </TabPane>
     </Tabs>
   ))

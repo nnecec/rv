@@ -1,6 +1,11 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Row, Col, Button, Input, Form, Select, Switch, Collapse, Divider } from 'antd'
+import { DeleteOutlined, PlusOutlined, CloseOutlined } from '@ant-design/icons'
 import { useObserver, observer } from 'mobx-react-lite'
+import { toJS } from 'mobx'
+
+import { ReactSortable } from '../sortable'
+import { DragBox } from '../box'
 
 const layout = {
   labelCol: { span: 8 },
@@ -18,6 +23,7 @@ const PropertyEditor = (props) => {
 
   const [form] = Form.useForm()
   const configRef = useRef({})
+  const [currentEnum, setCurrentEnum] = useState([])
 
   const editingId = useObserver(() => paletteData.editingId)
 
@@ -25,12 +31,15 @@ const PropertyEditor = (props) => {
     if (editingId) {
       configRef.current = paletteData.board.find(item => item.id === editingId)
       const { key, property } = configRef.current
-      form.setFieldsValue({ key, ...property })
+      const { enum: propertyEnum, ...resetProperty } = property
+
+      form.setFieldsValue({ key, ...resetProperty })
+
+      setCurrentEnum(propertyEnum)
     }
   }, [editingId])
 
   function onFinish (values) {
-    console.log(values)
     const index = paletteData.board.findIndex(item => item.id === editingId)
 
     paletteData.board[index].key = values.key
@@ -39,9 +48,13 @@ const PropertyEditor = (props) => {
       ...configRef.current.property,
       ...values
     }
+
+    if (currentEnum && currentEnum.length) {
+      paletteData.board[index].property.enum = currentEnum
+    }
   }
 
-  if (!editingId) return 'Please select a card.'
+  if (!editingId) return 'Please select a card from Board.'
 
   return (
     <div>
@@ -53,37 +66,6 @@ const PropertyEditor = (props) => {
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit">Apply</Button>
         </Form.Item>
-
-        {
-          // 'enum' in configRef.current.property && <Form.Item label="enum">
-          //   {
-          //     configRef.current.property.enum.map((eItem, i) => {
-          //       let value = null
-          //       let label = null
-          //       if ('label' in eItem && 'value' in eItem) {
-          //         label = eItem.label
-          //         value = eItem.value
-          //       }
-
-          //       return <Input.Group key={value}>
-          //         <Row>
-          //           <Col span={10}>
-          //             <Input value={label} onChange={(e) => {
-          //               config.property.enum[i].label = e.target.value
-          //             }} />
-          //           </Col>
-          //           <Col span={1}>:</Col>
-          //           <Col span={10}>
-          //             <Input value={value} onChange={(e) => {
-          //               config.property.enum[i].value = e.target.value
-          //             }} />
-          //           </Col>
-          //         </Row>
-          //       </Input.Group>
-          //     })
-          //   }
-          // </Form.Item>
-        }
 
         <Collapse defaultActiveKey="basic" onChange={(key) => console.log(key)}>
           <Panel header="Basic" key="basic">
@@ -104,6 +86,52 @@ const PropertyEditor = (props) => {
                 <Option value="number">number</Option>
               </Select>
             </Form.Item>
+
+            <Divider></Divider>
+
+            {
+              currentEnum && currentEnum.length > 0 &&
+              <div>
+                <p>Enum</p>
+                {
+                  <ReactSortable animation={150} list={currentEnum} setList={setCurrentEnum}>
+                    {currentEnum.map(({ label, value }, i) => {
+                      return <DragBox key={i}>
+                        <Input.Group>
+                          <Row>
+                            <Col span={10}>
+                              <Input value={label} onChange={(e) => {
+                                e.persist()
+                                setCurrentEnum(currentEnum => {
+                                  currentEnum[i].label = e.target.value
+                                  return [...currentEnum]
+                                })
+                              }} />
+                            </Col>
+                            <Col span={1}>:</Col>
+                            <Col span={10}>
+                              <Input value={value} onChange={(e) => {
+                                e.persist()
+                                setCurrentEnum(currentEnum => {
+                                  currentEnum[i].value = e.target.value
+                                  return [...currentEnum]
+                                })
+                              }} />
+                            </Col>
+                            <Col span={1}><Button icon={<CloseOutlined />} size="small" onClick={() => {
+                              setCurrentEnum(currentEnum => currentEnum.filter((_, index) => index !== i))
+                            }} /></Col>
+                          </Row>
+                        </Input.Group>
+                      </DragBox>
+                    })}
+                  </ReactSortable>
+                }
+                <Button icon={<PlusOutlined />} size="small" onClick={() => {
+                  setCurrentEnum(currentEnum => currentEnum.concat([{ label: '', value: '' }]))
+                }} />
+              </div>
+            }
 
             <Divider></Divider>
             <Form.Item name="description" label="description">

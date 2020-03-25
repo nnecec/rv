@@ -1,8 +1,8 @@
 // @flow
 import React, { useEffect, useRef } from 'react'
-import { Card } from 'antd'
+import { Button, Card } from 'antd'
+import { DeleteOutlined } from '@ant-design/icons'
 import { useObserver } from 'mobx-react-lite'
-import shortid from 'shortid'
 
 import { ReactSortable } from '../components/sortable'
 
@@ -51,6 +51,16 @@ const PaletteComponents = props => {
                 paletteData.tabKey = 'property'
               }
             }}
+            controls={[{
+              icon: <DeleteOutlined />,
+              onClick: (e) => {
+                e.stopPropagation()
+                paletteData.board = paletteData.board.filter(d => d.id !== config.id)
+                if (config.id === paletteData.editingId) {
+                  paletteData.editingId = null
+                }
+              }
+            }]}
           >
             <FormilyRender config={{
               type: 'object',
