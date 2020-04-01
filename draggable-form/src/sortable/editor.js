@@ -1,9 +1,9 @@
 import React from 'react'
-import { Card, Tabs } from 'antd'
+import { Tabs } from 'antd'
 import { useObserver } from 'mobx-react-lite'
 import { cloneDeep } from 'lodash'
 
-import FormilyRender from '../components/formily-render'
+import { SchemaRender } from '../components/formily-render'
 import PropertyEditor from '../components/property-editor'
 import { DragBox } from '../components/box'
 import { ReactSortable } from '../components/sortable'
@@ -43,12 +43,12 @@ const PaletteComponents = props => {
           {paletteData.components.map((config, index) => {
             return (
               <DragBox key={config.id}>
-                <FormilyRender config={{
+                <SchemaRender config={{
                   type: 'object',
                   properties: {
                     [config.key]: config.property
                   }
-                }}></FormilyRender>
+                }}></SchemaRender>
               </DragBox>
             )
           })}

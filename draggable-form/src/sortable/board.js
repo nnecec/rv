@@ -6,18 +6,11 @@ import { useObserver } from 'mobx-react-lite'
 
 import { ReactSortable } from '../components/sortable'
 
-import FormilyRender from '../components/formily-render'
+import { SchemaRender } from '../components/formily-render'
 import { DragBox } from '../components/box'
 
 const PaletteComponents = props => {
   const { paletteData } = props
-
-  useEffect(() => {
-  }, [handleClickCard])
-
-  function handleClickCard (e) {
-    console.log(e)
-  }
 
   return useObserver(() => (
     <Card
@@ -28,7 +21,6 @@ const PaletteComponents = props => {
       <ReactSortable
         list={paletteData.board}
         setList={(data) => {
-          console.log(data)
           paletteData.board = data
         }}
         animation={150}
@@ -62,12 +54,12 @@ const PaletteComponents = props => {
               }
             }]}
           >
-            <FormilyRender config={{
+            <SchemaRender config={{
               type: 'object',
               properties: {
                 [config.key]: config.property
               }
-            }}></FormilyRender>
+            }}></SchemaRender>
           </DragBox>
         ))}
       </ReactSortable>

@@ -26,7 +26,7 @@ const Container = styled.div`
       return palette.blue[3]
     }
 
-    return palette.gray[1]
+    return palette.gray[0]
   }};
   box-shadow: ${({ isDragging }) =>
     isDragging ? `2px 2px 1px ${colors.slate}` : 'none'};
@@ -44,7 +44,7 @@ const Container = styled.div`
 
   background-color: ${props => {
     if (!props.isSelected) {
-      return colors.smoke
+      return colors.snow
     }
   }};
     text-decoration: none;

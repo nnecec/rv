@@ -5,7 +5,6 @@ import 'antd/dist/antd.css'
 
 const App = () => {
   return (
-    // <Palette></Palette>
     <SortBoard />
   )
 }

@@ -29,6 +29,7 @@ const Column = styled.div`
   display: flex;
   margin: 0 4px;
   width: 300px;
+  overflow-y: auto;
 `
 
 const Palette = props => {

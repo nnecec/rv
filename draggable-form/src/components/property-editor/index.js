@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { Row, Col, Button, Input, Form, Select, Switch, Collapse, Divider } from 'antd'
-import { DeleteOutlined, PlusOutlined, CloseOutlined } from '@ant-design/icons'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
+import { Radio, Tabs, Row, Col, Button, Input, Form, Select, Switch, Collapse, Divider } from 'antd'
+import { PlusOutlined, CloseOutlined } from '@ant-design/icons'
 import { useObserver, observer } from 'mobx-react-lite'
-import { toJS } from 'mobx'
 
 import { ReactSortable } from '../sortable'
 import { DragBox } from '../box'
@@ -24,6 +23,7 @@ const PropertyEditor = (props) => {
   const [form] = Form.useForm()
   const configRef = useRef({})
   const [currentEnum, setCurrentEnum] = useState([])
+  const [enumType, setEnumType] = useState(1)
 
   const editingId = useObserver(() => paletteData.editingId)
 
@@ -40,6 +40,7 @@ const PropertyEditor = (props) => {
   }, [editingId])
 
   function onFinish (values) {
+    console.log(values)
     const index = paletteData.board.findIndex(item => item.id === editingId)
 
     paletteData.board[index].key = values.key
@@ -49,8 +50,10 @@ const PropertyEditor = (props) => {
       ...values
     }
 
-    if (currentEnum && currentEnum.length) {
-      paletteData.board[index].property.enum = currentEnum
+    if (enumType === 1) {
+      if (currentEnum && currentEnum.length) {
+        paletteData.board[index].property.enum = currentEnum
+      }
     }
   }
 
@@ -78,14 +81,14 @@ const PropertyEditor = (props) => {
             <Form.Item name="title" label="title" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
-            <Form.Item name="type" label="type" rules={[{ required: true }]}>
+            {/* <Form.Item name="type" label="type" rules={[{ required: true }]}>
               <Select>
                 <Option value="string">string</Option>
                 <Option value="object">object</Option>
                 <Option value="array">array</Option>
                 <Option value="number">number</Option>
               </Select>
-            </Form.Item>
+            </Form.Item> */}
 
             <Divider></Divider>
 
@@ -93,43 +96,56 @@ const PropertyEditor = (props) => {
               currentEnum && currentEnum.length > 0 &&
               <div>
                 <p>Enum</p>
+                <Radio.Group onChange={(e) => setEnumType(e.target.value)} value={enumType}>
+                  <Radio value={1}>Custom options</Radio>
+                  <Radio value={2}>Remote API</Radio>
+                </Radio.Group>
                 {
-                  <ReactSortable animation={150} list={currentEnum} setList={setCurrentEnum}>
-                    {currentEnum.map(({ label, value }, i) => {
-                      return <DragBox key={i}>
-                        <Input.Group>
-                          <Row>
-                            <Col span={10}>
-                              <Input value={label} onChange={(e) => {
-                                e.persist()
-                                setCurrentEnum(currentEnum => {
-                                  currentEnum[i].label = e.target.value
-                                  return [...currentEnum]
-                                })
-                              }} />
-                            </Col>
-                            <Col span={1}>:</Col>
-                            <Col span={10}>
-                              <Input value={value} onChange={(e) => {
-                                e.persist()
-                                setCurrentEnum(currentEnum => {
-                                  currentEnum[i].value = e.target.value
-                                  return [...currentEnum]
-                                })
-                              }} />
-                            </Col>
-                            <Col span={1}><Button icon={<CloseOutlined />} size="small" onClick={() => {
-                              setCurrentEnum(currentEnum => currentEnum.filter((_, index) => index !== i))
-                            }} /></Col>
-                          </Row>
-                        </Input.Group>
-                      </DragBox>
-                    })}
-                  </ReactSortable>
+                  enumType === 1 &&
+                  <>
+                    <ReactSortable animation={150} list={currentEnum} setList={setCurrentEnum}>
+                      {currentEnum.map(({ label, value }, i) => {
+                        return <DragBox key={i}>
+                          <Input.Group>
+                            <Row>
+                              <Col span={10}>
+                                <Input value={label} onChange={(e) => {
+                                  e.persist()
+                                  setCurrentEnum(currentEnum => {
+                                    currentEnum[i].label = e.target.value
+                                    return [...currentEnum]
+                                  })
+                                }} />
+                              </Col>
+                              <Col span={1}>:</Col>
+                              <Col span={10}>
+                                <Input value={value} onChange={(e) => {
+                                  e.persist()
+                                  setCurrentEnum(currentEnum => {
+                                    currentEnum[i].value = e.target.value
+                                    return [...currentEnum]
+                                  })
+                                }} />
+                              </Col>
+                              <Col span={1}><Button icon={<CloseOutlined />} size="small" onClick={() => {
+                                setCurrentEnum(currentEnum => currentEnum.filter((_, index) => index !== i))
+                              }} /></Col>
+                            </Row>
+                          </Input.Group>
+                        </DragBox>
+                      })}
+                    </ReactSortable>
+                    <Button icon={<PlusOutlined />} size="small" onClick={() => {
+                      setCurrentEnum(currentEnum => currentEnum.concat([{ label: '', value: '' }]))
+                    }} />
+                  </>
                 }
-                <Button icon={<PlusOutlined />} size="small" onClick={() => {
-                  setCurrentEnum(currentEnum => currentEnum.concat([{ label: '', value: '' }]))
-                }} />
+                {
+                  enumType === 2 && <Form.Item name="enum">
+                    <Input />
+                  </Form.Item>
+                }
+
               </div>
             }
 
