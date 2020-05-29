@@ -4,7 +4,7 @@ import { isPlainObject } from 'lodash'
 import SchemaRender from './schema-render'
 import { createEffects } from './effects'
 
-const InstanceRender = (props) => {
+const SchemaEffectsRender = (props) => {
   const { config, onSubmit, children, ...restProps } = props
 
   const [memoConfig, apiMap] = useMemo(() => {
@@ -31,9 +31,9 @@ const InstanceRender = (props) => {
     return 'loading...'
   }
 
-  return <SchemaRender config={config} onSubmit={onSubmit} effects={createEffects({ api: apiMap })} {...restProps}>
+  return <SchemaRender config={memoConfig} onSubmit={onSubmit} effects={createEffects({ api: apiMap })} {...restProps}>
     {children}
   </SchemaRender>
 }
 
-export default InstanceRender
+export default SchemaEffectsRender

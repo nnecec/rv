@@ -65,6 +65,9 @@ const PropertyEditor = (props) => {
         {...layout}
         onFinish={onFinish}
         form={form}
+        initialValues={{
+          enum: 'https://jsonplaceholder.typicode.com/posts'
+        }}
       >
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit">Apply</Button>

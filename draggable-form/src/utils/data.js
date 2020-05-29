@@ -94,7 +94,8 @@ export const componentsPanelConfigs = {
   week: {
     type: 'week',
     title: '周',
-    name: 'week'
+    name: 'week',
+    'x-component': 'time'
   },
   upload: {
     type: 'upload',
@@ -120,22 +121,61 @@ export const componentsPanelConfigs = {
       listType: 'text'
     }
   },
-  range: {
-    type: 'range',
-    title: '范围选择',
-    name: 'range',
-    'x-component-props': {
-      min: 0,
-      max: 1024,
-      marks: [
-        0,
-        1024
-      ]
-    }
-  },
+  // range: {
+  //   type: 'range',
+  //   title: '范围选择',
+  //   name: 'range',
+  //   'x-component-props': {
+  //     min: 0,
+  //     max: 1024,
+  //     marks: [
+  //       0,
+  //       1024
+  //     ]
+  //   }
+  // },
   rating: {
     type: 'rating',
     title: '等级',
     name: 'rating'
+  },
+  cascader: {
+    type: 'cascader',
+    title: '等级',
+    name: 'cascader',
+    enum: [
+      {
+        value: 'zhejiang',
+        label: 'Zhejiang',
+        children: [
+          {
+            value: 'hangzhou',
+            label: 'Hangzhou',
+            children: [
+              {
+                value: 'xihu',
+                label: 'West Lake'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        value: 'jiangsu',
+        label: 'Jiangsu',
+        children: [
+          {
+            value: 'nanjing',
+            label: 'Nanjing',
+            children: [
+              {
+                value: 'zhonghuamen',
+                label: 'Zhong Hua Men'
+              }
+            ]
+          }
+        ]
+      }
+    ]
   }
 }

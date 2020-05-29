@@ -5,7 +5,7 @@ import { Button, Drawer, PageHeader } from 'antd'
 import { Submit, Reset } from '@formily/antd'
 import ReactJSONView from 'react-json-view'
 
-import { InstanceRender } from '../components/formily-render'
+import { SchemaEffectsRender } from '../components/formily-render'
 
 const Container = styled.div`
 `
@@ -44,11 +44,11 @@ const ToolBar = (props) => {
         width={800}
       >
 
-        <InstanceRender config={schema} onSubmit={values => console.log(values)}>
+        <SchemaEffectsRender config={schema} onSubmit={values => console.log(values)}>
           <Submit>Confirm</Submit>
           <Reset>Reset</Reset>
           <Button onClick={() => setJsonDrawerVisible(true)}>View JSON</Button>
-        </InstanceRender>
+        </SchemaEffectsRender>
 
         <Drawer
           title="JSON Viewer"

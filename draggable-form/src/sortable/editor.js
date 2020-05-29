@@ -16,48 +16,53 @@ const PaletteComponents = props => {
   const { paletteData, forceUpdate } = props
 
   return useObserver(() => (
-    <Tabs
-      activeKey={paletteData.tabKey}
-      tabBarStyle={{ padding: '0 8px' }}
-      style={{ backgroundColor: '#fff' }}
-      onChange={(key) => {
-        paletteData.tabKey = key
-      }}>
-      <TabPane tab="Components" key="components">
-        <ReactSortable
-          list={paletteData.components}
-          setList={(data) => {
-            paletteData.components = data
-          }}
-          group={{
-            name: 'sortable-group',
-            pull: 'clone',
-            put: false
-          }}
-          animation={150}
-          clone={item => {
-            return cloneDeep({ ...item, id: shortid.generate() })
-          }}
-          sort={false}
-        >
-          {paletteData.components.map((config, index) => {
-            return (
-              <DragBox key={config.id}>
-                <SchemaRender config={{
-                  type: 'object',
-                  properties: {
-                    [config.key]: config.property
-                  }
-                }}></SchemaRender>
-              </DragBox>
-            )
-          })}
-        </ReactSortable>
-      </TabPane>
-      <TabPane tab="Property" key="property">
-        <PropertyEditor paletteData={paletteData} forceUpdate={forceUpdate}></PropertyEditor>
-      </TabPane>
-    </Tabs>
+    <div style={{ overflow: 'auto' }}>
+      <Tabs
+        activeKey={paletteData.tabKey}
+        tabBarStyle={{ padding: '0 8px' }}
+        style={{ backgroundColor: '#fff' }}
+        onChange={(key) => {
+          paletteData.tabKey = key
+        }}>
+        <TabPane tab="Components" key="components">
+          <div style={{ overflow: 'auto' }}>
+            <ReactSortable
+              list={paletteData.components}
+              setList={(data) => {
+                paletteData.components = data
+              }}
+              group={{
+                name: 'sortable-group',
+                pull: 'clone',
+                put: false
+              }}
+              animation={150}
+              clone={item => {
+                return cloneDeep({ ...item, id: shortid.generate() })
+              }}
+              sort={false}
+            >
+              {paletteData.components.map((config, index) => {
+                return (
+                  <DragBox key={config.id}>
+                    <p>{config.id}</p>
+                    <SchemaRender config={{
+                      type: 'object',
+                      properties: {
+                        [config.key]: config.property
+                      }
+                    }}></SchemaRender>
+                  </DragBox>
+                )
+              })}
+            </ReactSortable>
+          </div>
+        </TabPane>
+        <TabPane tab="Property" key="property">
+          <PropertyEditor paletteData={paletteData} forceUpdate={forceUpdate}></PropertyEditor>
+        </TabPane>
+      </Tabs>
+    </div>
   ))
 }
 
