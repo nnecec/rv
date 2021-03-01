@@ -1,6 +1,6 @@
 # rv
 
-![](./rv.jpg)
+![rv](./rv.jpg)
 
 ## What is rv?
 

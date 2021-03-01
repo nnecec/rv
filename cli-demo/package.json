@@ -1,0 +1,21 @@
+{
+  "name": "cli-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nnecec-cli dev -p 4500 -w"
+  },
+  "author": "nnecec",
+  "license": "ISC",
+  "devDependencies": {
+    "@nnecec/babel-preset": "^0.0.3",
+    "@nnecec/cli": "^0.0.2",
+    "@nnecec/webpack-react-config": "^0.0.2"
+  },
+  "dependencies": {
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0"
+  }
+}
